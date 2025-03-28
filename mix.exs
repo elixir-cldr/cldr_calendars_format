@@ -65,11 +65,12 @@ defmodule Cldr.Calendar.Format.MixProject do
 
       {:ex_cldr_numbers, "~> 2.34"},
       {:ex_cldr_calendars, "~> 2.1"},
+      {:magical, github: "elixir-cldr/magical", branch: "valarm"},
 
       {:nimble_csv, "~> 0.5", only: [:dev, :test, :release]},
       {:jason, "~> 1.0"},
       {:ex_doc, "~> 0.18", only: [:release, :dev]},
-      {:dialyxir, "~> 1.0-rc", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
     ]
   end
 
