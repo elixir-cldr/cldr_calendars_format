@@ -103,4 +103,15 @@ defmodule Cldr.Calendar.Format.Test do
 
     assert first_day == 7
   end
+
+  test "Setting the :day_names option" do
+    day_names = [
+      {1, "One"}, {2, "Two"}, {3, "Three"}, {4, "Four"}, {5, "Five"}, {6, "Six"}, {7, "Seven"}
+    ]
+
+    formatter = Cldr.Calendar.Formatter.Markdown
+
+    assert Cldr.Calendar.Format.month(2019, 1, formatter: formatter, day_names: day_names) =~
+      ~r"### January 2019\n\nOne | Two | Three | Four | Five | Six | Seven\n.*"
+  end
 end

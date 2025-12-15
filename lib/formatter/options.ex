@@ -54,12 +54,13 @@ defmodule Cldr.Calendar.Formatter.Options do
     differently to other days on a calendar. The
     default is `Date.utc_today/0`
 
-  * `:day_names` is a list of 2-tuples that
+  * `:day_names` is an ordered list of seven 2-tuples that
     map the day of the week to a localised day
-    name that are most often used as headers
+    name. These are most often used as headers
     for a month. The default is automatically
     calculated from the provided `:calendar`
-    and `:locale`.
+    and `:locale`. An example could be:
+    `[{1, "one"}, {2, "two"}, ..., {7, "sevem"}]`.
 
   """
   @valid_options [
@@ -239,5 +240,18 @@ defmodule Cldr.Calendar.Formatter.Options do
 
     {:ok, date} = Date.new(2000, 1, 1, Keyword.get(options, :calendar))
     {:ok, Cldr.Calendar.localize(date, :days_of_week, backend: backend, locale: locale)}
+  end
+
+  day_names = quote do
+    [{1, _}, {2, _}, {3, _}, {4, _}, {5, _}, {6, _}, {7, _}]
+  end
+
+  def validate_option(:day_names, _options, unquote(day_names) = day_names) do
+    {:ok, day_names}
+  end
+
+  def validate_option(option, _options, any) do
+    {:error, {Cldr.Calendar.Formatter.InvalidOption,
+      "Invalid option or option value. Found option #{inspect option} with value #{inspect any}"}}
   end
 end
